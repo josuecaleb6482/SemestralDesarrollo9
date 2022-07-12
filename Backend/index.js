@@ -1,33 +1,18 @@
- 
-/*const express = require('express');
-const app = express();
- 
-const cors = require("cors"); 
+require("dotenv").config();
 
-const errorHandler = require( './_middleware/error-handler');
+const express = require("express")
+const app = express()
 
-//app.use(json());
-//app.use(urlencoded({ extended: true }));
+const cors = require("cors")
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-// api routes
-app.use('/usuarios', require('./users/usuarios.controller'));
+require("./users/routes/users.routes")(app);
+require("./clientes/routes/clientes.routes")(app);
 
-// global error handler
-app.use(errorHandler);
-
-// start server
-const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 3000) : 3000;
-console.log(port)
-app.listen(port, () => console.log('Server listening on port ' + port));*/
-const express = require('express')
-const app = express()
 const port = process.env.PORT || 3000
-
-app.use('/usuarios', require('./users/usuarios.controller'));
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)

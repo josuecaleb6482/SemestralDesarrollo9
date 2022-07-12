@@ -1,48 +1,37 @@
 const express = require('express');
-const router = express.Router();
+//const router = express.Router();
 const Joi = require('joi');
 
 const validateRequest = require('../_middleware/validate-request');
 //const Role = require('_helpers/role');
 const userService = require('./usuarios.service');
 
-// routes
-
-router.get('/', getAll);
-router.get('/:id', getById);
-router.post('/', createSchema, create);
-router.put('/:id', updateSchema, update);
-router.delete('/:id', _delete);
-
-module.exports = router;
-
-// route functions
-
-function getAll(req, res, next) {
+exports.getAll = async (req, res, next) => {
     userService.getAll()
         .then(users => res.json(users))
         .catch(next);
-}
+};
 
-function getById(req, res, next) {
+exports.getById = async (req, res, next) => {
     userService.getById(req.params.id)
         .then(user => res.json(user))
         .catch(next);
-}
+};
 
-function create(req, res, next) {
+exports.create = async (req, res, next) => {
     userService.create(req.body)
         .then(() => res.json({ message: 'User created' }))
         .catch(next);
-}
+};
 
-function update(req, res, next) {
+exports.update = async (req, res, next) => {
     userService.update(req.params.id, req.body)
         .then(() => res.json({ message: 'User updated' }))
         .catch(next);
-}
+};
 
-function _delete(req, res, next) {
+
+exports._delete = async (req, res, next) => {
     userService.delete(req.params.id)
         .then(() => res.json({ message: 'User deleted' }))
         .catch(next);
@@ -50,7 +39,7 @@ function _delete(req, res, next) {
 
 // schema functions
 
-function createSchema(req, res, next) {
+exports.createSchema = (req, res, next) => {
     const schema = Joi.object({
         email: Joi.string().email().required(),
         password: Joi.string().min(6).required(),
@@ -61,7 +50,7 @@ function createSchema(req, res, next) {
     validateRequest(req, next, schema);
 }
 
-function updateSchema(req, res, next) {
+exports.updateSchema = async (req, res, next) => {
     const schema = Joi.object({
         email: Joi.string().email().required(),
         password: Joi.string().min(6).required(),
