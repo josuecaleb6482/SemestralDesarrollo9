@@ -21,10 +21,10 @@ async function getById(id) {
 async function create(params) {
     // validate
     if (await db.User.findOne({ where: { email: params.email } })) {
-        throw 'Email "' + params.email + '" is already registered';
+        throw 'Email "' + params.email + '" ya está registrado';
     }
 
-    const user = new db.Usuarios(params);
+    const user = new db.User(params);
     
     // hash password
     user.passwordHash = await bcrypt.hash(params.password, 10);
@@ -39,7 +39,7 @@ async function update(id, params) {
     // validate
     const emailChanged = params.email && user.email !== params.email;
     if (emailChanged && await db.User.findOne({ where: { email: params.email } })) {
-        throw 'Email "' + params.email + '" is already registered';
+        throw 'Email "' + params.email + '" ya está registrado';
     }
 
     // hash password if it was entered
@@ -61,6 +61,6 @@ async function _delete(id) {
 
 async function getUser(id) {
     const user = await db.User.findByPk(id);
-    if (!user) throw 'User not found';
+    if (!user) throw 'Usuario no encontrado';
     return user;
 }
