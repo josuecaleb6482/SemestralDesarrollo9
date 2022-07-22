@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/services2.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <title>Services</title>
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header1">
+                <a class="header-title" href="#">
+                    <h1>Nombre Web</h1>
+                </a>
+                <a class="header-options" href="#">
+                    <div>
+                        <a href=""> <img src="img/svg/user-icon.svg" alt=""> Inicia sesión</a>
+                        <span>|</span>
+                        <a href="">Registro</a>
+                    </div>
+                </a>
+            </div>
+            <div class="header2">
+                <nav class="header2-nav">
+                    <ul class="header2-ul">
+                        <li><a href="#">Servicios</a></li>
+                        <li><a href="#">Favoritos</a></li>
+                        <li><a href="#">Historial</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <main>
+
+            <div class="main">
+
+                <div class="service-title">
+                    <img src="img/services/masmovil.png" alt="">
+                </div>
+                <div class="service-data">
+                    <section class="service-progress">
+                        <div class="progress select" id="progress-1">
+                            <span>Datos Cliente</span>
+                        </div>
+                        <div class="progress none" id="progress-2">
+                            <span>Detalles del pago</span>
+                        </div>
+                        <div class="progress none"  id="progress-3">
+                            <span>Factura</span>
+                        </div>
+                    </section>
+                    <section  class="service-form">
+
+                        <form id="pay-form" action="">
+                            
+                            <section class="form-input">
+                                <label for="service-name">Servicio a pagar</label>
+                                <input disabled value="" id="service-name" type="text">
+                                <label for="client-name">Nombre del cliente</label>
+                                <input value="" disabled id="client-name" type="text">
+                                <label  for="client-id">ID de cuenta</label>
+                                <input value="" disabled id="client-id" type="text">
+                                <label  for="client-balance">Saldo pendiente</label>
+                                <input value="" class="balance-input" disabled id="client-balance" type="text">
+                                <label  for="client-pay">Total a pagar:</label>
+                                <input class="pay-input"   id="client-pay" type="text">
+                            </section>
+                            <section class="form-btn">
+                                <button class="btn" type="submit">Enviar</button>
+                            </section>
+                        </form>
+
+                    </section>
+                </div>
+
+            </div>
+
+        </main>
+        <div class="footer-basic">
+            <footer>
+                <div class="social"><a href="#"><i class="icon ion-social-instagram"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-facebook"></i></a></div>
+                <ul class="list-inline">
+                    <li class="list-inline-item"><a href="#">Home</a></li>
+                    <li class="list-inline-item"><a href="#">Services</a></li>
+                    <li class="list-inline-item"><a href="#">About</a></li>
+                    <li class="list-inline-item"><a href="#">Terms</a></li>
+                    <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+                </ul>
+                <p class="copyright">Company Name © 2022</p>
+            </footer>
+        </div>
+    </div>
+</body>
+
+</html>

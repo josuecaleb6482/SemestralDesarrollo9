@@ -14,17 +14,20 @@ async function initialize() {
 
     // create db if it doesn't already exist
     await ensureDbExists(dbName);
-
+    
     // connect to db
     const sequelize = new Sequelize(dbName, userName, password, { host, dialect });
 
     // init models and add them to the exported db object
-    db.User = require('../users/usuarios.model')(sequelize);
-    db.Clientes = require('../clientes/model/clientes.model')(sequelize);
-    db.Transacciones = require('../transacciones/model/transacciones.model')(sequelize);
+    db.User     = require('../components/users/usuarios.model')(sequelize);
+    db.Entities = require('../components/entities/entidades.model')(sequelize);
+    db.ClientEntitie = require('../components/clientEntities/clientEntities.model')(sequelize);
+    db.Clientes = require('../components/clients/clients.model')(sequelize)
 
+    db.Clientes.hasMany(db.ClientEntitie, {foreignKey: 'id'})
+    db.ClientEntitie.belongsTo(db.Clientes, {foreignKey: 'id', targetKey: 'id'})
     // sync all models with database
-    await sequelize.sync({ alter: false });
+    //await sequelize.sync();
 }
 
 async function ensureDbExists(dbName) {

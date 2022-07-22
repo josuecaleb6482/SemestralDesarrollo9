@@ -1,4 +1,7 @@
-module.exports = validateRequest;
+const express = require('express')
+const jwtVerify = express.Router()
+
+module.exports = validateRequest, jwtVerify;
 
 function validateRequest(req, next, schema) {
     const options = {
@@ -14,3 +17,8 @@ function validateRequest(req, next, schema) {
         next();
     }
 }
+
+jwtVerify.use((req,res,next)=>{
+    
+})
+
