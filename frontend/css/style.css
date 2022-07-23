@@ -20,8 +20,6 @@ body {
     grid-template-columns: repeat(2,1fr);
 } 
 
-.text-img {
-}
 
 .login-html{
   border-radius: 5px;
@@ -29,6 +27,10 @@ body {
     height: fit-content;
     padding:50px 70px 100px 70px;
     background-color: #06283D;
+  }
+
+  .text-form {
+    color: #E8AA42;
   }
 
   /*animacion entre login/signUp*/
@@ -120,12 +122,11 @@ cursor: pointer;
     background:#1c6be2;
 }
 
-.login-form .group .check:checked + label .icon:before{
-    transform:scale(1) rotate(45deg);
+.hidden {
+  visibility: hidden;
 }
-.login-form .group .check:checked + label .icon:after{
-    transform:scale(1) rotate(-45deg);
-}
+
+
 .login-html .sign-in:checked + .tab + .sign-up + .tab + .login-form .sign-in-htm{
     transform:rotate(0);
 }
