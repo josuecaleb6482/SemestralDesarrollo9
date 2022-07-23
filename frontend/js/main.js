@@ -1,7 +1,9 @@
+
 (()=>{
     const App = {
         htmtElements : {
             loginForm : document.getElementById('loginForm'),
+            signUpForm: document.getElementById('signUpForm'),
             documentMain : document.getElementById('main'),
             servicesItems : document.getElementById('servicesItems'),
             serviceForm:null,
@@ -14,11 +16,11 @@
             idService : ''
         },
         templates : {            
-            dataClientTemplate : (account='') => {
+            dataClientTemplate : (serviceName) => {
 
                 const template =  `
                     <div class="service-title">
-                        <img src="img/services/masmovil.png" alt="">
+                        <img src="img/services/${serviceName}" alt="">
                     </div>
                     <div class="service-data">
                     <section class="service-progress">
@@ -40,7 +42,7 @@
                             </section>
                             <section class="form-input">
                                 <label  for="client-id">ID de cuenta</label>
-                                <input value="${account}" class="white" id="clientId" type="text">
+                                <input value="" class="white" id="clientId" type="text">
                             </section>
                             <section class="form-btn">
                                 <button class="btn" type="submit">Enviar</button>
@@ -96,9 +98,9 @@
                 if(_email.length > 0 && _pass.length >0){
                     
                     try {
-                        const {data} = await axios.post('http://localhost:3000/usuarios/login',{
-                            _email:_email,
-                            _pass:_pass
+                        const {data} = await axios.post('http://localhost:3000/usuarios/authenticate',{
+                            email:_email,
+                            password:_pass
                         });
                         sessionStorage.setItem('data',JSON.stringify(data))
                         location.replace("services.html")
@@ -107,10 +109,51 @@
                     }
                 }
             },
+            onsignUpFormSubmit : async (e) => {
+                e.preventDefault()
+                let name = e.target.name.value.trim()
+                let apellido = e.target.lastName.value.trim()
+                let email = e.target.email.value.trim()
+                let pass = e.target.pass.value.trim()
+                if(name.length ==0 || apellido.length ==0 || email.length ==0 || pass.length ==0){
+                    console.log("form incompleto")
+                    return
+                }
+                console.log(name, apellido, email, pass)
+                try {
+                    await axios.post('http://localhost:3000/usuarios/register',{
+                        nombre: name,
+                        apellido:  apellido,
+                        email:  email,
+                        password:  pass,
+                        rol:  "U"
+                    })
+                    const {data} = await axios.post('http://localhost:3000/usuarios/authenticate',{
+                            email:email,
+                            password:pass
+                        });
+                        sessionStorage.setItem('data',JSON.stringify(data))
+                        location.replace("services.html")
+                } catch (error) {
+                    console.log("Ususario inválido o ya existe")
+                }
+            },
+            serviceLoadFromBack : async () => {
+
+                template = ''
+                const {data} = await axios.get('http://localhost:3000/entidades/')
+                data.map(entitie => {
+                    template += `<div>
+                    <img id="${entitie.id}" alt="${entitie.logo}" src="img/services/${entitie.logo}" alt="">
+                </div>`
+                })
+                App.htmtElements.servicesItems.innerHTML = template
+            },
             onServiceItemClick : (e) => {
                 if( e.target.localName === 'img'){
                     App.setting.idService = e.target.id;
-                    App.htmtElements.documentMain.innerHTML = App.templates.dataClientTemplate();
+                    let serviceName = e.target.alt
+                    App.htmtElements.documentMain.innerHTML = App.templates.dataClientTemplate(serviceName);
                     App.htmtElements.serviceForm = document.getElementById('service-form').addEventListener('submit',App.handler.onServiceFormClick)
                 }                
             },
@@ -125,9 +168,9 @@
             },
             onServiceFormClick: async (e)=>{
                 e.preventDefault()
-                    const serviceId = 2
-                    const account = e.target.clientId.value                   
-               
+                    const serviceId = App.setting.idService
+                    const account = e.target.clientId.value 
+                                    
                 const {data} = await axios.post('http://localhost:3000/clientEntities/balance',{
                     serviceId:serviceId,
                     account:account
@@ -186,12 +229,13 @@
             if(page === 'services.html'){
                 const user = sessionStorage.getItem('data') ? JSON.parse(sessionStorage.getItem('data')) : location.replace("index.html")
                 App.htmtElements.singOffLink.addEventListener('click',App.handler.onSignOffClick)
-                App.htmtElements.userNameInfo.innerHTML = `<img src="img/svg/user-icon.svg" alt="">${user.user[0].nombre}`
-                App.setting.idCliente=user.user[0].id
+                App.htmtElements.userNameInfo.innerHTML = `<img src="img/svg/user-icon.svg" alt="">${user.nombre}`
+                App.setting.idCliente=user.id
             }
-            
+            if(App.htmtElements.servicesItems) App.handler.serviceLoadFromBack()
             if(App.htmtElements.servicesItems) App.htmtElements.servicesItems.addEventListener('click', App.handler.onServiceItemClick);
             if(App.htmtElements.loginForm) App.htmtElements.loginForm.addEventListener('submit',App.handler.onLoginFormSubmit);
+            if(App.htmtElements.signUpForm) App.htmtElements.signUpForm.addEventListener('submit',App.handler.onsignUpFormSubmit);
         }
     }
     App.init()
