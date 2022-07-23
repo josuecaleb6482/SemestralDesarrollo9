@@ -11,10 +11,24 @@ const userService = require('./usuarios.service');
 //router.get('/', getAll);
 router.get('/:id', getById);
 router.post('/login',getLogin);
+router.post('/authenticate', authenticateSchema, authenticate);
 
 module.exports = router;
 
 // route functions
+function authenticateSchema (req, res, next) {
+    const schema = Joi.object({
+        email: Joi.string().required(),
+        password: Joi.string().required()
+    });
+    validateRequest(req, next, schema);
+}
+
+function authenticate (req, res, next) {
+    userService.authenticate(req.body)
+        .then(user => res.json(user))
+        .catch(next);
+}
 
 async function getLogin (req ,res) {
     const {_email, _pass} = req.body

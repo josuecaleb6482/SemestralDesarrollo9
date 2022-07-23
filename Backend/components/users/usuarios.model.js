@@ -4,16 +4,17 @@ module.exports = model;
 
 function model(sequelize) {
     const attributes = {
-        email: { type: DataTypes.STRING},    
-        passwordHash: { type: DataTypes.STRING},
-        nombre: { type: DataTypes.STRING},
-        apellido: { type: DataTypes.STRING}
+        nombre: { type: DataTypes.STRING, allowNull: false },
+        apellido: { type: DataTypes.STRING, allowNull: false },
+        email: { type: DataTypes.STRING, allowNull: false },
+        hash: { type: DataTypes.STRING, allowNull: false },
+        rol: { type: DataTypes.STRING, allowNull: false }
     };
 
     const options = {
         defaultScope: {
-            // exclude password hash by default
-            attributes: { exclude: ['passwordHash'] }
+            // exclude hash by default
+            attributes: { exclude: ['hash'] }
         },
         scopes: {
             // include hash with this scope

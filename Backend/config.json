@@ -1,7 +1,7 @@
 {
     "dbName": "SPLSys",
     "dbConfig": {
-        "server": "localhost",
+        "server": "splsys.database.windows.net",
         "options": {
             "port": 1433,
             "trustServerCertificate": true
@@ -9,9 +9,10 @@
         "authentication": {
             "type": "default",
             "options": {
-                "userName": "sa",
-                "password": "root"
+                "userName": "AdminSplsys",
+                "password": "Panama2022$"
             }
         }
-    }
+    },
+    "secret": "software"
 }
