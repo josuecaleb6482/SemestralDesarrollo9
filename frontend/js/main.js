@@ -9,6 +9,10 @@
             singOffLink : document.getElementById('singOff'),
             userNameInfo : document.getElementById('userName')
         },
+        setting : {
+            idCliente : '',
+            idService : ''
+        },
         templates : {            
             dataClientTemplate : (account='') => {
 
@@ -50,8 +54,6 @@
                 return template;
             },
             payDetailsTemplate : ({Cliente,cuenta, saldoActual}) => {
-
-                console.log(Cliente)
                 return `
                 <form id="pay-form" action="">
                             
@@ -61,14 +63,23 @@
                     <label for="client-name">Nombre del cliente</label>
                     <input value="${Cliente.nombre} ${Cliente.apellido}" disabled id="client-name" type="text">
                     <label  for="client-id">ID de cuenta</label>
-                    <input value="${cuenta}" disabled id="client-account" type="text">
+                    <input value="${cuenta}" disabled id="clientAccount" type="text">
                     <label  for="client-balance">Saldo pendiente</label>
-                    <input value="${saldoActual}.00" class="balance-input" disabled id="clientBalance" type="text">
+                    <input value="${saldoActual}" class="balance-input" disabled id="clientBalance" type="text">
                     <label  for="client-pay">Total a pagar:</label>
-                    <input class="pay-input"   id="client-pay" type="text">
+                    <input class="pay-input"   id="clientPay" type="text">
                 </section>
                 <section class="form-btn">
-                    <button class="btn" type="submit">Enviar</button>
+                    <button id="submitBtn" class="btn" type="submit">Enviar</button>
+                    <a id="paypalBtn"  class="paypal-btn hidden" href="#">
+                                    <span class="paypal-button-title">
+                                        Pagar con 
+                                      </span>
+                                      <span class="paypal-logo">
+                                        <i class="blue">Pay</i>
+                                        <i class="celest">Pal</i>
+                                      </span>
+                    </a>
                 </section>
             </form>
                 `;
@@ -98,10 +109,9 @@
             },
             onServiceItemClick : (e) => {
                 if( e.target.localName === 'img'){
-                    const serviceId = e.target.id;
+                    App.setting.idService = e.target.id;
                     App.htmtElements.documentMain.innerHTML = App.templates.dataClientTemplate();
                     App.htmtElements.serviceForm = document.getElementById('service-form').addEventListener('submit',App.handler.onServiceFormClick)
-                    
                 }                
             },
             onProgress1Click: () => {
@@ -135,9 +145,31 @@
                     document.getElementById('progress-1').className += ' cursor'
                 }
             },
-            onPayFormSubmit : (e) => {
-                console.log(e.target.clientBalance.value)
-                console.log('mandar saldo para yappy')
+            onPayFormSubmit : async (e) => {
+                e.preventDefault()
+                let balance = Number(e.target.clientBalance.value.trim())
+                let toPay = Number(e.target.clientPay.value.trim())
+                let account = e.target.clientAccount.value.trim()
+                
+                if(toPay > balance || toPay.length==0 ){
+                    console.log(balance, toPay, account)
+                    console.log("pago no puede ser mayor al saldo")
+                    return
+                }
+                const {data} = await axios.post('http://localhost:3000/paypal/create-payment',{
+                    price:toPay,
+                    idCliente : App.setting.idCliente,
+                    idService : App.setting.idService,
+                    balance : balance,
+                    account : account
+                })
+                if(data){
+                    document.getElementById('submitBtn').className = 'btn hidden'
+                    let paypalbtn = document.getElementById('paypalBtn')
+                    paypalbtn.className = 'paypal-btn flex'
+                    paypalbtn.href = data.data.links[1].href
+                    paypalbtn.target = '_blank'
+                }
             },
             onSignOffClick: () => {
                 sessionStorage.removeItem('data')
@@ -155,6 +187,7 @@
                 const user = sessionStorage.getItem('data') ? JSON.parse(sessionStorage.getItem('data')) : location.replace("index.html")
                 App.htmtElements.singOffLink.addEventListener('click',App.handler.onSignOffClick)
                 App.htmtElements.userNameInfo.innerHTML = `<img src="img/svg/user-icon.svg" alt="">${user.user[0].nombre}`
+                App.setting.idCliente=user.user[0].id
             }
             
             if(App.htmtElements.servicesItems) App.htmtElements.servicesItems.addEventListener('click', App.handler.onServiceItemClick);

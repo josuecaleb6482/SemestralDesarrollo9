@@ -7,10 +7,12 @@ app.use(express.json())
 const port = process.env.PORT || 3000
 app.set()
 
+app.use('/paypal',require('./components/paypal/paypal.controller'));
 app.use('/usuarios', require('./components/users/usuarios.controller'));
 app.use('/entidades',require('./components/entities/entidades.controller'));
 app.use('/clientEntities',require('./components/clientEntities/clientEntities.controller'));
 require("./components/clients/clients.routes")(app);
+require("./components/transacciones/transacciones.routes")(app);
 
 app.get('/', (req, res) => {
   res.send('Hello World!')

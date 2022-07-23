@@ -2,6 +2,7 @@ const tedious = require('tedious');
 const { Sequelize } = require('sequelize');
 
 const { dbName, dbConfig } = require('../config.json');
+const { required } = require('joi');
 
 module.exports = db = {};
 
@@ -23,6 +24,7 @@ async function initialize() {
     db.Entities = require('../components/entities/entidades.model')(sequelize);
     db.ClientEntitie = require('../components/clientEntities/clientEntities.model')(sequelize);
     db.Clientes = require('../components/clients/clients.model')(sequelize)
+    db.Transacciones = require('../components/transacciones/transacciones.model')(sequelize)
 
     db.Clientes.hasMany(db.ClientEntitie, {foreignKey: 'id'})
     db.ClientEntitie.belongsTo(db.Clientes, {foreignKey: 'id', targetKey: 'id'})

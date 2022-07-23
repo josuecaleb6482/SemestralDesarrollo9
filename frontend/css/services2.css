@@ -152,13 +152,56 @@ label {
 }
 
 
+.paypal-btn{
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 30px;
+  cursor: pointer;
+  padding: 5px;
+  color: white;
+  border-radius: 5px;
+  background-color: #fac20b;
+  border-style: none;
+  width: 300px;
+  
+  gap: 5px;
+}
 
+.paypal-btn:hover {
+  background-color: #e6b104;
+}
+
+.paypal-button-title {
+  color: black;
+}
+
+.blue{
+  color: #001aff;
+  font-weight: 700;
+}
+.celest{
+  font-weight: 600;
+  color: #23d3ff;
+  font-weight: 700;
+}
+
+.flex {
+  display: flex;
+}
+
+.hidden {
+  display: none;
+}
 
 
 @media screen and (max-width: 900px){
 
     .form-input input[type=text] {
       width: 100%;
+    }
+    .paypal-btn{
+      margin-left: 15%;
     }
     .form-btn {
       text-align: center;
