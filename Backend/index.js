@@ -12,6 +12,7 @@ app.use(cors());
 require("./users/routes/users.routes")(app);
 require("./clientes/routes/clientes.routes")(app);
 require("./transacciones/routes/transacciones.routes")(app);
+require("./entidades/routes/entidades.routes")(app);
 require("./auth/routes/auth.routes")(app);
 
 const port = process.env.PORT || 3000
