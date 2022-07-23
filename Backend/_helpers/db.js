@@ -27,7 +27,7 @@ async function initialize() {
     db.Transacciones = require('../components/transacciones/transacciones.model')(sequelize)
 
     db.Clientes.hasMany(db.ClientEntitie, {foreignKey: 'id'})
-    db.ClientEntitie.belongsTo(db.Clientes, {foreignKey: 'id', targetKey: 'id'})
+    db.ClientEntitie.belongsTo(db.Clientes, {foreignKey: 'idCliente'})
     // sync all models with database
     //await sequelize.sync();
 }
