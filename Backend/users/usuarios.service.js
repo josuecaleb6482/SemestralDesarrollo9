@@ -1,8 +1,11 @@
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
+const { secret } = require('../config.json');
 const db = require('../_helpers/db');
 
 module.exports = {
+    authenticate,
     getAll,
     getById,
     create,
@@ -10,8 +13,20 @@ module.exports = {
     delete: _delete
 };
 
+async function authenticate({ email, password }) {
+    const user = await db.Usuarios.scope('withHash').findOne({ where: { email } });
+    console.log("Autenticar")
+    console.log(user);
+    if (!user || !(await bcrypt.compare(password, user.hash)))
+        throw 'Username or password is incorrect';
+
+    // authentication successful
+    const token = jwt.sign({ sub: user.id }, secret, { expiresIn: '7d' });
+    return { ...omitHash(user.get()), token };
+}
+
 async function getAll() {
-    return await db.User.findAll();
+    return await db.Usuarios.findAll();
 }
 
 async function getById(id) {
@@ -20,17 +35,24 @@ async function getById(id) {
 
 async function create(params) {
     // validate
-    if (await db.User.findOne({ where: { email: params.email } })) {
-        throw 'Email "' + params.email + '" ya está registrado';
+    if (await db.Usuarios.findOne({ where: { email: params.email } })) {
+        throw 'Username "' + params.email + '" is already taken';
     }
 
-    const user = new db.User(params);
-    
     // hash password
-    user.passwordHash = await bcrypt.hash(params.password, 10);
+    if (params.password) {
+        params.hash = await bcrypt.hash(params.password, 10);
+    }
 
     // save user
-    await user.save();
+     
+    //await db.Usuarios.create(params);
+    const usuario = new db.Usuarios(params);
+    
+    //cliente.fechaCrea = sequelize.literal('CURRENT_TIMESTAMP')
+     
+    // save user
+    await usuario.save();
 }
 
 async function update(id, params) {
@@ -38,18 +60,20 @@ async function update(id, params) {
 
     // validate
     const emailChanged = params.email && user.email !== params.email;
-    if (emailChanged && await db.User.findOne({ where: { email: params.email } })) {
-        throw 'Email "' + params.email + '" ya está registrado';
+    if (emailChanged && await db.Usuarios.findOne({ where: { email: params.email } })) {
+        throw 'Username "' + params.email + '" is already taken';
     }
 
     // hash password if it was entered
     if (params.password) {
-        params.passwordHash = await bcrypt.hash(params.password, 10);
+        params.hash = await bcrypt.hash(params.password, 10);
     }
 
     // copy params to user and save
     Object.assign(user, params);
     await user.save();
+
+    return omitHash(user.get());
 }
 
 async function _delete(id) {
@@ -60,7 +84,12 @@ async function _delete(id) {
 // helper functions
 
 async function getUser(id) {
-    const user = await db.User.findByPk(id);
-    if (!user) throw 'Usuario no encontrado';
+    const user = await db.Usuarios.findByPk(id);
+    if (!user) throw 'User not found';
     return user;
+}
+
+function omitHash(user) {
+    const { hash, ...userWithoutHash } = user;
+    return userWithoutHash;
 }

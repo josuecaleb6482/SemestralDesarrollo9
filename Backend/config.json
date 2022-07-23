@@ -13,5 +13,6 @@
                 "password": "Panama2022$"
             }
         }
-    }
+    },
+    "secret": "software"
 }
