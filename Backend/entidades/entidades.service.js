@@ -56,7 +56,8 @@ async function update(id, params) {
     Object.assign(entidad, params);
     await entidad.save();
 
-    return omitHash(entidad.get());
+   // return omitHash(entidad.get());
+   return  entidad.get();
 }
 
 async function _delete(id) {
