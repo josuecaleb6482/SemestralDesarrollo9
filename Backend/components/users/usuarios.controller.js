@@ -34,11 +34,15 @@ async function getLogin (req ,res) {
     const {_email, _pass} = req.body
     try {
         const response = await userService.getAll(_email,_pass)
+        console.log(response)
         const payload = {
             check : true
         }
         
+        const secret = process.env.JSON_KEY
+        console.log('secreyo',secret)
         const token = jwt.sign(payload,process.env.JSON_KEY)
+        
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify({ user: response,token: token }));
         

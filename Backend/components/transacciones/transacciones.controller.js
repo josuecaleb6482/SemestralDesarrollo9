@@ -38,7 +38,7 @@ exports.update = async (req, res, next) => {
     .then(() => res.json({ message: "Transacción actualizada" }))
     .catch(next);
 };
-
+//borrar o cambiar a borrado logico
 exports._delete = async (req, res, next) => {
   transacService
     .delete(req.params.id)
