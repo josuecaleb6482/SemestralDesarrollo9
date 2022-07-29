@@ -17,7 +17,6 @@ body {
 
 .header1 {
     background-color: #1363DF;
-    padding-top: 10px;
     display: flex;
     justify-content: space-around;
 }
@@ -28,9 +27,16 @@ body {
     
 }
 
+header
+
 .header2 {
     background-color: #06283D;
 
+}
+.header-title {
+  margin-top: 10px;
+  height: 60px;
+  color: #ffcb3d;
 }
 
 .header2-ul {
@@ -97,7 +103,7 @@ flex-direction: column;
 }
 
 .service-data {
-  margin-top: 20px;
+  margin-top: 0px;
   align-self: center;
   --background-color: aqua;
   width: 60%;
@@ -130,7 +136,7 @@ flex-direction: column;
 }
 
 .service-form {
-  margin-top: 10px;
+  margin-bottom: 13vh;
 }
 
 .form-title {
@@ -194,9 +200,12 @@ label {
 }
 
 .form-btn{
-  margin-bottom: 13vh;
-
+  gap: 10px;
+  display: flex;
+  margin-bottom: 95px;
 }
+
+
 .btn:hover {
   background-color: #093753;
 
@@ -213,17 +222,54 @@ label {
   border-radius: 5px;
   background-color: #fac20b;
   border-style: none;
-  width: 300px;
-  
+  width: 300px;  
+  height: 50px;
   gap: 5px;
+  margin: 1rem 0;  
 }
 
 .paypal-btn:hover {
   background-color: #e6b104;
 }
 
+.yappy-btn{
+  gap: 10px;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 30px;
+  cursor: pointer;
+  padding: 5px;
+  color: white;
+  border-radius: 5px;
+  background-color: rgb(53, 83, 250);
+  border-style: none;
+  width: 300px;
+  margin: 1rem 0;
+  height: 50px;
+}
+
+span:nth-child(2) {
+  color: #FF7D23;
+  font-weight: 500;
+}
+
+.flex2 {
+  display: flex;
+}
+
+.hidden {
+  display: none;
+}
+
 .paypal-button-title {
   color: black;
+}
+
+.alert {
+  font-weight: 600;
+  height: 20px;
+  color: red;
 }
 
 .blue{
@@ -236,14 +282,59 @@ label {
   font-weight: 700;
 }
 
-.flex {
-  display: flex;
+.green {
+  margin-top: 20px;
+  color: green;
 }
 
 .hidden {
   display: none;
 }
 
+table {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+th, td {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-right: 35px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+#contenedor{ 
+place-content: center;
+height: 17vh;
+color: #000;
+}
+.cargando{ 
+position: relative; 
+color: #FFF;
+margin-top: 2em;
+letter-spacing: 0.08em;
+text-transform: uppercase
+}
+
+.rueda {
+border: 10px solid rgba(255, 255, 255, .3);
+border-radius: 50%;
+border-left-color: transparent;
+width: 80px;
+height: 80px;
+animation: giro 1s linear infinite;
+}
+
+@keyframes giro {
+0% {
+transform: rotate(0deg);
+}
+
+100% {
+transform: rotate(360deg);
+}
+}
 
 @media screen and (max-width: 1800px){
 	
@@ -273,13 +364,23 @@ label {
     }
 }
 
-
-
-
 @media screen and (max-width: 900px){
 	.banner {
         width: 100%;
         height: 100px;
+    }
+
+    .service-data {
+      width: 420px !important;
+    }
+
+    .form-input input[type="text"]{
+      width: 100%;
+    }
+
+    .form-btn {
+      align-items: center;
+      flex-direction: column;
     }
 
     .main-services {
@@ -343,3 +444,5 @@ label {
     justify-content: center;
     
   }
+
+ 

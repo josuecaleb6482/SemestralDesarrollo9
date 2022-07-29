@@ -4,7 +4,8 @@ module.exports = app => {
     
     router.get('/', transacciones.getAll);
     router.get('/:id', transacciones.getById);
-    router.get('/:idCliente', transacciones.getByIdCliente);
+    router.get('/record/:idCliente', transacciones.getByIdCliente);
+    router.post('/numTran', transacciones.getByNumTran)
     router.post('/', transacciones.createSchema, transacciones.create);
     router.put('/:id', transacciones.updateSchema, transacciones.update);
     router.delete('/:id', transacciones._delete);

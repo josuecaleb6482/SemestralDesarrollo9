@@ -10,6 +10,13 @@ exports.getAll = async (req, res, next) => {
     .catch(next);
 };
 
+exports.getByNumTran = async (req, res, next) => {
+  transacService
+    .getTransacByNumTran(req.body)
+    .then((trasnac) => res.json(trasnac))
+    .catch(next);
+};
+
 exports.getById = async (req, res, next) => {
   transacService
     .getById(req.params.id)
@@ -50,9 +57,11 @@ exports._delete = async (req, res, next) => {
 exports.createSchema = (req, res, next) => {
   const schema = Joi.object({
     idCliente: Joi.number(),
+    numTran : Joi.string(),
     fechaTran: Joi.date(),
     idCliente: Joi.number(),
     idServ: Joi.number(),
+    numCuenta : Joi.string(),
     saldoInicial: Joi.number(),
     monto: Joi.number(),
     saldoActual: Joi.number(),
@@ -66,9 +75,11 @@ exports.createSchema = (req, res, next) => {
 exports.updateSchema = async (req, res, next) => {
   const schema = Joi.object({
     idCliente: Joi.number(),
+    numTran : Joi.string(),
     fechaTran: Joi.date(),
     idCliente: Joi.number(),
     idServ: Joi.number(),
+    numCuenta : Joi.string(),
     saldoInicial: Joi.number(),
     monto: Joi.number(),
     saldoActual: Joi.number(),

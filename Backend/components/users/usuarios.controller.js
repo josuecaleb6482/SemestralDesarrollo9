@@ -12,9 +12,27 @@ const userService = require('./usuarios.service');
 router.get('/:id', getById);
 router.post('/login',getLogin);
 router.post('/authenticate', authenticateSchema, authenticate);
+router.post('/register', registerSchema, register);
 
 module.exports = router;
 
+
+function registerSchema (req, res, next)  {
+    const schema = Joi.object({
+        nombre: Joi.string().required(),
+        apellido: Joi.string().required(),
+        email: Joi.string().required(),
+        password: Joi.string().min(6).required(),
+        rol: Joi.string().empty('')
+    });
+    validateRequest(req, next, schema);
+}
+
+function register (req, res, next) {
+    userService.create(req.body)
+        .then(() => res.json({ message: 'Registration successful' }))
+        .catch(next);
+}
 // route functions
 function authenticateSchema (req, res, next) {
     const schema = Joi.object({

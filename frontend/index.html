@@ -10,7 +10,7 @@
     </style>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-    <title>Nombre Web</title>
+    <title>Pago Online</title>
 </head>
 
 <body>
@@ -29,7 +29,8 @@
                 <br>
                 <h2></h2>
             </div>
-            <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Iniciar Sesión</label>
+            <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Iniciar
+                Sesión</label>
             <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Registrar</label>
             <div class="login-form">
                 <form id="loginForm" class="sign-in-htm">
@@ -41,11 +42,15 @@
                         <label for="pass" class="label">Contraseña</label>
                         <input id="pass" type="password" class="input" data-type="password">
                     </div>
-                    
+
+                    <section class="alert" id="alertLogin"></section>
                     <div class="group">
                         <input type="submit" class="button" value="Iniciar Sesión">
                     </div>
-                    
+                    <br>
+                    <a href="#">¿Ha olvidado su contraseña?</a>
+
+
                 </form>
                 <form id="signUpForm" class="sign-up-htm">
 
@@ -59,12 +64,13 @@
                     </div>
                     <div class="group">
                         <label for="email" class="label">Correo Electrónico</label>
-                        <input id="email" type="text" class="input">
+                        <input id="email" type="email" class="input">
                     </div>
                     <div class="group">
                         <label for="pass" class="label">Contraseña</label>
                         <input id="pass" type="password" class="input" data-type="password">
                     </div>
+                    <section class="alert" id="alertSignUp"></section>
                     <div class="group">
                         <input type="submit" class="button" value="Registrarse">
                     </div>
@@ -72,10 +78,13 @@
             </div>
         </div>
     </div>
-    
+
     <div class="footer-basic">
         <footer>
-            <div class="social"><a href="#"><i class="icon ion-social-instagram"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-facebook"></i></a></div>
+            <div class="social"><a href="#"><i class="icon ion-social-instagram"></i></a><a href="#"><i
+                        class="icon ion-social-snapchat"></i></a><a href="#"><i
+                        class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-facebook"></i></a>
+            </div>
             <ul class="list-inline">
                 <li class="list-inline-item"><a href="#">Home</a></li>
                 <li class="list-inline-item"><a href="#">Services</a></li>
@@ -88,7 +97,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/index.js"></script>
 </body>
 
 </html>

@@ -10,12 +10,13 @@ module.exports = {
 async function getBalance(idServ,account) {
     try {
         return await db.ClientEntitie.findAll({
+            
+            include : {
+                model : db.Clientes
+            },
             where : {
                 idServ : idServ,
                 cuenta : account
-            },
-            include : {
-                model : db.Clientes
             }
         })
           

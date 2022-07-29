@@ -5,16 +5,33 @@ const jwt = require('jsonwebtoken');
 const { secret } = require('../../config.json');
 
 module.exports = {
-    getAll,
     getById,
-    authenticate
+    authenticate,
+    create
 };
 
+async function create(params) {
+
+    // validate
+    if (await db.User.findOne({ where: { email: params.email } })) {
+        throw 'Username "' + params.email + '" is already taken';
+    }
+
+    // hash password
+    if (params.password) {
+        params.hash = await bcrypt.hash(params.password, 10);
+    }
+
+     
+    //await db.Usuarios.create(params);
+    const usuario = new db.User(params);
+         
+    // save user
+    await usuario.save();
+}
+
 async function authenticate({ email, password }) {
-    console.log(password)
     const user = await db.User.scope('withHash').findOne({ where: { email } });
-    console.log("Autenticar")
-    console.log(user);
     if (!user || !(await bcrypt.compare(password, user.hash)))
         throw 'Username or password is incorrect';
 
@@ -23,19 +40,6 @@ async function authenticate({ email, password }) {
     return { ...omitHash(user.get()), token };
 }
 
-async function getAll(_email, _pass) {
-    
-    const user =  await db.User.findAll({
-        where : {
-            passwordHash : _pass,
-            email : _email.toString()
-        }
-    });
-
-    if(user == '') throw 'User not found'
-    
-    return user;
-}
 
 async function getById(id) {
     return await getUser(id);
