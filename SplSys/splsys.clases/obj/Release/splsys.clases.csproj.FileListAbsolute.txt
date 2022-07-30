@@ -1,0 +1,6 @@
+C:\UTP\Semestral\SplSys\splsys.clases\bin\Release\splsys.clases.dll
+C:\UTP\Semestral\SplSys\splsys.clases\bin\Release\splsys.clases.pdb
+C:\UTP\Semestral\SplSys\splsys.clases\obj\Release\splsys.clases.csproj.AssemblyReference.cache
+C:\UTP\Semestral\SplSys\splsys.clases\obj\Release\splsys.clases.csproj.CoreCompileInputs.cache
+C:\UTP\Semestral\SplSys\splsys.clases\obj\Release\splsys.clases.dll
+C:\UTP\Semestral\SplSys\splsys.clases\obj\Release\splsys.clases.pdb

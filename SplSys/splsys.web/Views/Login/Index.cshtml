@@ -1,0 +1,136 @@
+﻿@{ Layout = null;
+                ViewBag.Title = "Iniciar Sesión"; }
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="icon" type="image/vnd.microsoft.icon" href="@Url.Content("~/Content/img/favicon.ico")" sizes="16x16 24x24 36x36 48x48">
+    <title>@ViewBag.Title - @System.Configuration.ConfigurationManager.AppSettings["AppName"]</title>
+    @Styles.Render("~/css1")
+    @Styles.Render("~/css2")
+    @Styles.Render("~/css3")
+    @Styles.Render("~/css4")
+    @Styles.Render("~/css5")
+    @Styles.Render("~/css6")
+    @Styles.Render("~/css7")
+    @Styles.Render("~/css8")
+    @Styles.Render("~/css9")
+    @Styles.Render("~/css10")
+    @Styles.Render("~/css12")
+    @Styles.Render("~/css13")
+    @Styles.Render("~/css14")
+    @Styles.Render("~/css15")
+    @Styles.Render("~/css16")
+    @Styles.Render("~/css17")
+    @Styles.Render("~/css19")
+    @Styles.Render("~/css20")
+    @Styles.Render("~/css21")
+    @Scripts.Render("~/bundles/jquery")
+</head>
+<body class="hold-transition sidebar-mini layout-footer-fixed">
+
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand-md navbar-light navbar-navy" style="margin-left:0px !important">
+        <div class="container">
+            <div class="navbar-brand">
+                @*<img src="~/Content/imgs/logo_mini.png" alt="Home" class="brand-image" style="opacity: .8" />*@
+                <span class="brand-text font-weight-light" style="color:#fff;">@System.Configuration.ConfigurationManager.AppSettings["NameEnterprse"]</span>
+                @*<img src="~/Content/img/logoFisc.png" alt="Seguros" class="brand-image" height="64" />*@
+            </div>
+        </div>
+    </nav>
+    <!-- /.navbar -->
+    <div class="hold-transition login-page">
+        <div class="login-box">
+            <div class="login-logo" style="font-size: 22pt;">
+                <b>@System.Configuration.ConfigurationManager.AppSettings["AppName"]</b>
+            </div>
+            <!-- /.login-logo -->
+            <div class="card">
+                <div class="card-body login-card-body">
+                    <p class="login-box-msg">Ingrese su datos para iniciar la sesi&oacute;n</p>
+                    @using (Html.BeginForm("Index", "Login", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @id = "frmLogin", role = "form" }))
+                    {
+        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="input-group mb-3">
+                    @Html.TextBox("Email", null, new { @class = "form-control", @placeholder = "Email", @required = "true" })
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="far fa-user"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    @Html.Password("Password", null, new { @class = "form-control", @placeholder = "Contraseña", @required = "true" })
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+                                                                        <div class="row">
+                                                                            @*<div class="col-8">
+                                                                                    <div class="icheck-primary">
+                                                                                        <input type="checkbox" id="Remember" name="Remember">
+                                                                                        <label for="remember">
+                                                                                            Mantenerse Conectado
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </div>*@
+                                                                            <!-- /.col -->
+                                                                            <div class="col-4">
+                                                                                <button type="submit" class="btn btn-dark btn-block">Ingresar</button>
+                                                                            </div>
+                                                                            <!-- /.col -->
+                                                                        </div>}
+                </div>
+                <!-- /.login-card-body -->
+            </div>
+        </div>
+
+    </div>
+    <footer class="main-footer" style="margin-left:0px !important">
+        <div class="float-right d-none d-sm-inline small">
+            Versión @System.Configuration.ConfigurationManager.AppSettings["Versión"]
+        </div>
+        @*<strong>Copyright &copy; @DateTime.Now.Year <a href="#">@System.Configuration.ConfigurationManager.AppSettings["NameEnterprse"]</a>.</strong> Todos los derechos reservados.*@
+    </footer>
+
+    @Scripts.Render("~/bundles/AMDLTD")
+
+    <script>$(document).ready(function () {
+            $('#frmLogin').validate({
+                rules: {
+                    User: {
+                        required: true
+                    },
+                    Password: {
+                        required: true
+                    },
+                },
+                messages: {
+                    User: {
+                        required: "Por favor ingrese el Usuario"
+                    },
+                    Password: {
+                        required: "Por favor ingrese la Contraseña"
+                    }
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.input-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                }
+            });
+        });</script>
+</body>
+</html>

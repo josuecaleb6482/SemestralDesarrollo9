@@ -1,0 +1,114 @@
+﻿@using splsys.web.Models;
+@{ ViewBag.Title = "Clientes";
+	Layout = "~/Views/Shared/FixedSideBarMain.cshtml"; }
+@section Header{
+
+}
+
+<div class="content">
+	<div class="container-fluid">
+		@Html.AntiForgeryToken()
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header">
+						<h5 class="card-title">Clientes</h5>
+						<div class="card-tools">
+							@*<a class="btn btn-success" href="@Url.Content("~/Clientes/Create")" title="Agregar Registro">
+		<i class="far fa-file"></i> Agregar
+							</a>*@
+						</div>
+					</div>
+					<div class="card-body" style="overflow-y:auto;">
+						<div class="divider">&nbsp;</div>
+						<table id="tblDatos" class="table table-bordered table-hover">
+							<thead>
+								<tr>
+									<th>Cédula</th>
+									<th>Nombre</th>
+									<th>Apellido</th>
+									<th>Email</th>
+									<th style="width:90px" class="text-center all"></th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+    $(function () {
+        var datos = {
+            __RequestVerificationToken : $('input[name=__RequestVerificationToken]').val()
+        };
+        $("#tblDatos").DataTable({
+            "language": {
+                url: '@Url.Content("~/Content/plugins/datatables/lang/Spanish.js")'
+            },
+            "responsive": true,
+            "autoWidth": false,
+            "stateSave": false,
+            "processing": true,
+            "serverSide": true,
+            "destroy": true,
+            "lengthMenu": [[100, 200, 300],[100, 200, 300]],
+            columnDefs: [{
+                orderable: false,
+                targets: [4]
+            }],
+            "ajax": {
+                "url": "@Url.Content("~/Clientes/ListarClientes")",
+                "type": "POST",
+                "async": true,
+                data :datos
+            },
+            "columns": [
+                { "data": "cedula" },
+                { "data": "nombre" },
+				{ "data": "apellido" },
+				{ "data": "email" },
+                { "data": "enlace" }
+            ],
+            "rowCallback": function (row, data, index) {
+                $('td:eq(4)', row).html(
+					"<a hiddenclass='btn btn-info btn-sm'  href='@Url.Content("~/Clientes/Edit")/" + data.id + "' style = 'color: #000 !important' title='Editar registro' ><i hidden class='fas fa-pencil-alt'></i></a>" +
+                    "  <buttom hidden class='btn btn-danger btn-sm' id='btnBorrar_" + data.Id  + "'  onclick='javascript:borrar(" + data.id + ")' style = 'color: #000 !important' title = 'Eliminar registro'><i class='fa fa-trash'></i></buttom>"
+                );
+            }
+
+        });
+    });
+
+    function borrar(id) {
+        bootbox.confirm({
+        message: "¿Está seguro que desea eliminar el cliente?",
+        backdrop: false,
+        centerVertical: true,
+        buttons: {
+            confirm: {
+                label: 'Sí',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'No',
+                className: 'btn-danger'
+            }
+        },
+            callback: function (result) {
+                if (result == true) {
+                     axios.get("@Url.Content("~/Clientes/Delete?id=")" + id).then(function (res) {
+                           refrescarTabla("tblDatos");
+                           notificaciones.mensajeAjax(res.data, "Borrar el cliente");
+                    })
+                    .catch(function (err) {
+                         notificaciones.error(err.message, "Borrar el cliente", null);
+                    });
+             }
+        }
+    });
+}
+</script>

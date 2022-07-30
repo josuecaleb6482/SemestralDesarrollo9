@@ -1,0 +1,164 @@
+﻿@using splsys.web.Models;
+@using splsys.clases;
+@using splsys.web.utils;
+@model UsuariosCLS.Datos
+
+@{ ViewBag.Title = "Modificar Usuario";
+                Layout = "~/Views/Shared/FixedSideBarMain.cshtml";
+                 }
+
+
+@section Header{
+
+}
+
+@using (Html.BeginForm(null, null, null, FormMethod.Post, new { @id = "frmModificarUsuario", role = "form" }))
+{
+@Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title">Modificar Usuario</h5>
+                                <div class="card-tools">
+                                    <a class="btn btn-default btn-md btn-icon" title="Regresar" href="@Url.Content("~/Usuarios/Index")">
+                                        <i class="fas fa-reply-all"></i> Regresar
+                                    </a>
+                                    <button id="btnGuardar" title="Guardar Registro" type="button" class="btn btn-primary btn-spinner btn-md btn-icon" data-spinner-text="Guardando..." data-toggle="modal" data-target="#exampleModal">
+                                        <i class="fas fa-save"></i> Guardar
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+								<div class="form-horizontal">
+									<div class="form-group" style="display: none">
+										@Html.LabelFor(model => model.id, htmlAttributes: new { @class = "control-label ml-2" })&nbsp;<span class="text-danger">*</span>
+										<div class="col-md-7">
+											@* @Html.PMTextBoxFor(model => model.IdCatalogo, new { htmlAttributes = new { @placeholder = "Identificador", @readonly = "@readonly" } })*@
+											@Html.TextBoxFor(p => p.id, new { @class = "form-control", @readOnly = true })
+											@Html.ValidationMessage("Id", new { @class = "text-danger" })
+										</div>
+									</div>
+									<div>
+										<div class="form-group">
+											@Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label ml-2" })&nbsp;<span class="text-danger">*</span>
+											<div class="col-md-7">
+												@* @Html.PMTextBoxFor(model => model.IdCatalogo, new { htmlAttributes = new { @placeholder = "Identificador", @readonly = "@readonly" } })*@
+												@Html.TextBoxFor(p => p.email, new { @class = "form-control", @readOnly = true })
+												@Html.ValidationMessage("Email", new { @class = "text-danger" })
+											</div>
+										</div>
+									</div>
+									<div>
+										<div class="form-group">
+											@Html.LabelFor(model => model.nombre, htmlAttributes: new { @class = "control-label ml-2" })&nbsp;<span class="text-danger">*</span>
+											<div class="col-md-7">
+												@* @Html.PMTextBoxFor(model => model.IdCatalogo, new { htmlAttributes = new { @placeholder = "Identificador", @readonly = "@readonly" } })*@
+												@Html.TextBoxFor(p => p.nombre, new { @class = "form-control"  })
+												@Html.ValidationMessage("Nombre", new { @class = "text-danger" })
+											</div>
+										</div>
+									</div>
+									<div>
+										<div class="form-group">
+											@Html.LabelFor(model => model.apellido, htmlAttributes: new { @class = "control-label ml-2" })&nbsp;<span class="text-danger">*</span>
+											<div class="col-md-7">
+												@* @Html.PMTextBoxFor(model => model.IdCatalogo, new { htmlAttributes = new { @placeholder = "Identificador", @readonly = "@readonly" } })*@
+												@Html.TextBoxFor(p => p.apellido, new { @class = "form-control" })
+												@Html.ValidationMessage("Apellido", new { @class = "text-danger" })
+											</div>
+										</div>
+									</div>
+
+
+								</div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- Modal -->
+                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">¿Dese guardar los cambios?</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+
+                                            <div style="padding:1em">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                <button type="button" onclick="Agregar()" class="btn btn-info">Aceptar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>}
+
+<script>
+    @*var btn = $("#btnGuardar").ladda({ timeout: 2000 });
+    $(document).ready(function () {
+
+            $.validator.setDefaults({
+                submitHandler: function () {
+                    var formulario = $('#frmModificarCatalogo').serialize();
+                    console.log(formulario);
+                    btn.ladda('start');
+                    axios.post("@Url.Content("~/Catalogo/Edit")", formulario).then(function (res) {
+                        btn.ladda('stop');
+                        notificaciones.mensajeAjax(res.data, "Modificar el Catalogo");
+                        })
+                        .catch(function (err) {
+                            alert("error");
+                            btn.ladda('stop');
+                            notificaciones.error(err.message, "Modificar el Catalogo", null);
+                        });
+                }
+            });
+            $('#frmModificarCatalogo').validate({
+                rules: {
+                    IdCatalogo: {
+                        required: true,
+                        maxlength: 50
+                    },
+                    IdTipoCatalogo: {
+                        required: true,
+                        maxlength: 50
+                    },
+                    Descripcion: {
+                        required: true,
+                        maxlength: 50
+                    }
+                },
+                messages: {
+                    IdCatalogo: {
+                        required: "Por favor ingrese el identificador",
+                        maxlength: "Tamaño máximo 50"
+                    },
+                    IdTipoCatalogo: {
+                        required: "Por favor seleccione la categoría de catálogo",
+                        maxlength: "Tamaño máximo 50"
+                    },
+                    Descripcion: {
+                        required: "Por favor ingrese la descripción",
+                        maxlength: "Tamaño máximo 50"
+                    }
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                }
+            });
+        });*@
+    function Agregar() {
+		var frmModificarUsuario = document.getElementById("frmModificarUsuario");
+		frmModificarUsuario.submit();
+    }
+</script>

@@ -1,0 +1,5 @@
+C:\UTP\Semestral\SplSys\splsys.clases\bin\Debug\splsys.clases.dll
+C:\UTP\Semestral\SplSys\splsys.clases\bin\Debug\splsys.clases.pdb
+C:\UTP\Semestral\SplSys\splsys.clases\obj\Debug\splsys.clases.csproj.CoreCompileInputs.cache
+C:\UTP\Semestral\SplSys\splsys.clases\obj\Debug\splsys.clases.dll
+C:\UTP\Semestral\SplSys\splsys.clases\obj\Debug\splsys.clases.pdb

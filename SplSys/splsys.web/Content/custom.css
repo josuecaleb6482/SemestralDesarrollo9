@@ -1,0 +1,95 @@
+﻿.login-page {
+    height: 80vh !important;
+}
+
+.toasts-top-right {
+    z-index: 999999999999 !important;
+}
+
+.daterangepicker {
+    z-index: 999999 !important;
+}
+
+.navbar-blue {
+    /*background-color: #337ab7 !important;*/
+    background-color: #0055A5 !important;
+}
+
+.btn-primary {
+    background-color: #337ab7 !important;
+}
+
+.page-item.active .page-link {
+    background-color: #337ab7 !important;
+}
+
+.page-link:hover {
+    background-color: #337ab7 !important;
+}
+
+.btn-info {
+    background-color: #337ab7 !important;
+}
+.error{
+    padding: 10px;
+}
+
+.hide {
+    display: none;
+}
+
+.fullscreen-modal {
+    height: 90% !important;
+    left: 0;
+    max-height: 100% !important;
+    max-width: 100% !important;
+    position: fixed;
+    top: 0;
+    width: 100% !important;
+}
+
+@media (min-width: 768px) {
+    .fullscreen-modal {
+        width: 750px;
+    }
+}
+
+@media (min-width: 992px) {
+    .fullscreen-modal  {
+        width: 970px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .fullscreen-modal  {
+        width: 1170px;
+    }
+}
+
+
+.active .bs-stepper-circle {
+    background-color: #337ab7 !important;
+}
+
+.panel-heading {
+    padding: 0;
+}
+
+.panel-title a {
+    display: block;
+    padding: 10px 15px;
+}
+
+.btn-spacing {
+    margin-right: 5px;
+    margin-bottom: 5px !important;
+}
+
+.selected {
+    background-color: #6c757d;
+}
+
+.borderRed {
+    border: 1px red solid;
+}
+
